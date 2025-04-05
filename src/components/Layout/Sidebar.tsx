@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -10,18 +11,36 @@ import {
   Menu,
   X,
   ChevronRight,
+  ChevronDown,
 } from "lucide-react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type NavItem = {
   icon: React.ElementType;
   label: string;
   href: string;
+  children?: { label: string; href: string }[];
 };
 
 const navItems: NavItem[] = [
   { icon: Home, label: "Dashboard", href: "/" },
   { icon: BarChart2, label: "Analytics", href: "/analytics" },
-  { icon: Users, label: "Customers", href: "/customers" },
+  { 
+    icon: Users, 
+    label: "Customers", 
+    href: "/customers",
+    children: [
+      { label: "New Customers", href: "/customers/new" },
+      { label: "Regular Customers", href: "/customers/regular" },
+      { label: "VIP Customers", href: "/customers/vip" }
+    ]
+  },
   { icon: Layers, label: "Projects", href: "/projects" },
   { icon: Settings, label: "Settings", href: "/settings" },
 ];
@@ -32,6 +51,7 @@ interface SidebarProps {
 
 const Sidebar = ({ className }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({});
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("");
 
@@ -39,7 +59,8 @@ const Sidebar = ({ className }: SidebarProps) => {
     const currentPath = location.pathname;
     const currentNavItem = navItems.find(item => 
       item.href === currentPath || 
-      (item.href !== "/" && currentPath.startsWith(item.href))
+      (item.href !== "/" && currentPath.startsWith(item.href)) ||
+      (item.children && item.children.some(child => child.href === currentPath))
     );
     
     if (currentNavItem) {
@@ -48,6 +69,13 @@ const Sidebar = ({ className }: SidebarProps) => {
       setActiveItem("Dashboard");
     }
   }, [location]);
+
+  const toggleDropdown = (label: string) => {
+    setOpenDropdowns(prev => ({
+      ...prev,
+      [label]: !prev[label]
+    }));
+  };
 
   return (
     <aside
@@ -84,21 +112,94 @@ const Sidebar = ({ className }: SidebarProps) => {
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeItem === item.label;
+            const hasChildren = item.children && item.children.length > 0;
+            const isDropdownOpen = openDropdowns[item.label] || false;
             
             return (
-              <li key={item.label}>
-                <Link
-                  to={item.href}
-                  className={cn(
-                    "flex items-center px-4 py-3 text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-600 transition-colors",
-                    isActive && "bg-indigo-50 text-indigo-600 font-medium"
-                  )}
-                >
-                  <Icon size={20} className={cn(isActive ? "text-indigo-600" : "text-gray-500")} />
-                  {!collapsed && (
-                    <span className="ml-3 text-sm">{item.label}</span>
-                  )}
-                </Link>
+              <li key={item.label} className="relative">
+                {hasChildren ? (
+                  <div>
+                    <button
+                      onClick={() => toggleDropdown(item.label)}
+                      className={cn(
+                        "w-full flex items-center px-4 py-3 text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-600 transition-colors",
+                        isActive && "bg-indigo-50 text-indigo-600 font-medium"
+                      )}
+                    >
+                      <Icon size={20} className={cn(isActive ? "text-indigo-600" : "text-gray-500")} />
+                      {!collapsed && (
+                        <>
+                          <span className="ml-3 text-sm flex-1">{item.label}</span>
+                          <ChevronDown 
+                            size={16} 
+                            className={cn(
+                              "transition-transform duration-200",
+                              isDropdownOpen ? "rotate-180" : ""
+                            )} 
+                          />
+                        </>
+                      )}
+                    </button>
+                    
+                    {!collapsed && isDropdownOpen && item.children && (
+                      <ul className="pl-10 mt-1 space-y-1">
+                        {item.children.map((child) => (
+                          <li key={child.label}>
+                            <Link
+                              to={child.href}
+                              className={cn(
+                                "block py-2 px-3 text-sm rounded-md hover:bg-indigo-50 hover:text-indigo-600 transition-colors",
+                                location.pathname === child.href && "bg-indigo-50 text-indigo-600 font-medium"
+                              )}
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    
+                    {collapsed && hasChildren && (
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button
+                            className="absolute inset-0 w-full h-full cursor-pointer"
+                            aria-label={`${item.label} submenu`}
+                          />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="bg-white shadow-md rounded-md py-1 min-w-[160px] border border-gray-200">
+                          <DropdownMenuItem className="px-3 py-2 text-sm font-medium text-gray-800 hover:bg-indigo-50 hover:text-indigo-600">
+                            {item.label}
+                          </DropdownMenuItem>
+                          <div className="h-px bg-gray-200 my-1" />
+                          {item.children.map((child) => (
+                            <DropdownMenuItem key={child.label} asChild>
+                              <Link
+                                to={child.href}
+                                className="px-3 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 w-full"
+                              >
+                                {child.label}
+                              </Link>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    to={item.href}
+                    className={cn(
+                      "flex items-center px-4 py-3 text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-600 transition-colors",
+                      isActive && "bg-indigo-50 text-indigo-600 font-medium"
+                    )}
+                  >
+                    <Icon size={20} className={cn(isActive ? "text-indigo-600" : "text-gray-500")} />
+                    {!collapsed && (
+                      <span className="ml-3 text-sm">{item.label}</span>
+                    )}
+                  </Link>
+                )}
               </li>
             );
           })}
