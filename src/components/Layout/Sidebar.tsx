@@ -1,6 +1,5 @@
-
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
   Home,
@@ -33,7 +32,22 @@ interface SidebarProps {
 
 const Sidebar = ({ className }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [activeItem, setActiveItem] = useState("Dashboard");
+  const location = useLocation();
+  const [activeItem, setActiveItem] = useState("");
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const currentNavItem = navItems.find(item => 
+      item.href === currentPath || 
+      (item.href !== "/" && currentPath.startsWith(item.href))
+    );
+    
+    if (currentNavItem) {
+      setActiveItem(currentNavItem.label);
+    } else if (currentPath === "/") {
+      setActiveItem("Dashboard");
+    }
+  }, [location]);
 
   return (
     <aside
@@ -75,7 +89,6 @@ const Sidebar = ({ className }: SidebarProps) => {
               <li key={item.label}>
                 <Link
                   to={item.href}
-                  onClick={() => setActiveItem(item.label)}
                   className={cn(
                     "flex items-center px-4 py-3 text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-600 transition-colors",
                     isActive && "bg-indigo-50 text-indigo-600 font-medium"
