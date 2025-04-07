@@ -1,8 +1,15 @@
-
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Bell, Search, Menu, X } from "lucide-react";
+import { Bell, Search, Menu, X, Settings, LogOut, User, UserRound, HelpCircle } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface NavbarProps {
   onToggleMobileSidebar: () => void;
@@ -17,7 +24,7 @@ const Navbar = ({ onToggleMobileSidebar, isMobileSidebarOpen, className }: Navba
   return (
     <header
       className={cn(
-        "h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-6 sticky top-0 z-10",
+        "h-16 bg-green-600 border-b border-gray-200 flex items-center justify-between px-4 md:px-6 sticky top-0 z-10",
         className
       )}
     >
@@ -64,14 +71,51 @@ const Navbar = ({ onToggleMobileSidebar, isMobileSidebarOpen, className }: Navba
         
         <div className="h-8 w-[1px] bg-gray-200 mx-2 hidden md:block"></div>
         
-        <div className="hidden md:flex items-center">
-          <div className="h-9 w-9 rounded-full bg-indigo-100 flex items-center justify-center">
-            <span className="text-indigo-600 font-medium text-sm">JS</span>
-          </div>
-          <div className="ml-2">
-            <p className="text-sm font-medium text-gray-800">John Smith</p>
-          </div>
-        </div>
+        {/* User dropdown menu */}
+        <DropdownMenu>
+          <DropdownMenuTrigger className="focus:outline-none">
+            <div className="hidden md:flex items-center hover:bg-gray-100 rounded-md p-1 transition-colors">
+              <Avatar className="h-9 w-9">
+                <AvatarFallback className="bg-indigo-100 text-indigo-600 font-medium text-sm">JS</AvatarFallback>
+              </Avatar>
+              <div className="ml-2 mr-1">
+                <p className="text-sm font-medium text-white">John Smith</p>
+              </div>
+            </div>
+            
+            {/* Mobile avatar only */}
+            <div className="md:hidden flex">
+              <Avatar className="h-9 w-9">
+                <AvatarFallback className="bg-indigo-100 text-indigo-600 font-medium text-sm">JS</AvatarFallback>
+              </Avatar>
+            </div>
+          </DropdownMenuTrigger>
+          
+          <DropdownMenuContent align="end" className="w-56">
+            <div className="px-2 py-1.5">
+              <div className="font-medium">John Smith</div>
+              <div className="text-xs text-muted-foreground">john.smith@example.com</div>
+            </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <UserRound className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <HelpCircle className="mr-2 h-4 w-4" />
+              <span>Help</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-red-500 focus:bg-red-50 focus:text-red-600">
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Log out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
