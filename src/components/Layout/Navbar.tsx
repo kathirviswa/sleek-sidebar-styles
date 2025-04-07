@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Bell, Search, Menu, X, Settings, LogOut, User, UserRound, HelpCircle } from "lucide-react";
+import { Bell, Search, Menu, X, Settings, LogOut, UserRound, HelpCircle } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuSeparator, 
-  DropdownMenuTrigger 
-} from "@/components/ui/dropdown-menu";
+import {  DropdownMenu,DropdownMenuContent,DropdownMenuItem,DropdownMenuSeparator,DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface NavbarProps {
@@ -24,7 +18,7 @@ const Navbar = ({ onToggleMobileSidebar, isMobileSidebarOpen, className }: Navba
   return (
     <header
       className={cn(
-        "h-16 bg-green-600 border-b border-gray-200 flex items-center justify-between px-4 md:px-6 sticky top-0 z-10",
+        "h-16 bg-green-500 border-b border-gray-200 flex items-center justify-between px-4 md:px-6 sticky top-0 z-10",
         className
       )}
     >
@@ -92,7 +86,7 @@ const Navbar = ({ onToggleMobileSidebar, isMobileSidebarOpen, className }: Navba
           </DropdownMenuTrigger>
           
           <DropdownMenuContent align="end" className="w-56">
-            <div className="px-2 py-1.5">
+            <div className="px-2 py-1.5 bg-none">
               <div className="font-medium">John Smith</div>
               <div className="text-xs text-muted-foreground">john.smith@example.com</div>
             </div>

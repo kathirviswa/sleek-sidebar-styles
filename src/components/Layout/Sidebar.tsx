@@ -30,7 +30,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   { 
     icon: Home, 
-    label: "Dashboard", 
+    label: "Dashboard",
     href: "/",
     children: [
       { label: "Overview", href: "/" },
@@ -115,7 +115,7 @@ const Sidebar = ({ className }: SidebarProps) => {
   return (
     <aside
       className={cn(
-        "flex flex-col h-screen bg-sidebar bg-green-600 text- white border-r border-sidebar-border transition-all duration-300 ease-in-out",
+        "flex flex-col h-screen bg-sidebar bg-green-500 text-white border-r border-sidebar-border transition-all duration-300 ease-in-out",
         collapsed ? "w-20" : "w-64",
         className
       )}
@@ -134,7 +134,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         <button
           onClick={() => setCollapsed(!collapsed)}
           className={cn(
-            "p-2 rounded-md text-sidebar-foreground hover:bg-sidebar-accent focus:outline-none",
+            "p-2 rounded-md text-sidebar-foreground hover:bg-sidebar-accent focus:outline-none bg-slate-200",
             collapsed ? "mx-auto" : ""
           )}
         >
@@ -155,7 +155,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                   <button
                     onClick={() => toggleDropdown(item.label)}
                     className={cn(
-                      "w-full flex items-center px-4 py-3 text-sidebar-foreground rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors",
+                      "w-full flex items-center  px-4 py-3 text-sidebar-foreground rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors",
                       isActive && "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                     )}
                   >
@@ -181,7 +181,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                           <Link
                             to={child.href}
                             className={cn(
-                              "block py-2 px-3 text-sm rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors",
+                              "block py-2 px-3 text-md text-slate-50 rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors",
                               location.pathname === child.href && "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                             )}
                           >
@@ -201,10 +201,10 @@ const Sidebar = ({ className }: SidebarProps) => {
                         />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="bg-white shadow-md rounded-md py-1 min-w-[160px] border border-gray-200">
-                        <DropdownMenuItem className="px-3 py-2 text-sm font-medium text-gray-800 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+                        <DropdownMenuItem className="px-3 py-2 text-sm font-medium text-white hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                           {item.label}
                         </DropdownMenuItem>
-                        <div className="h-px bg-gray-200 my-1" />
+                        <div className="h-px  my-1" />
                         {item.children.map((child) => (
                           <DropdownMenuItem key={child.label} asChild>
                             <Link
@@ -232,13 +232,13 @@ const Sidebar = ({ className }: SidebarProps) => {
         )}>
           <div className="flex-shrink-0">
             <div className="h-10 w-10 rounded-full bg-sidebar-primary/20 flex items-center justify-center">
-              <span className="text-sidebar-primary font-medium">JS</span>
+              <span className="text-sidebar-primary font-medium bg-white rounded-full w-8 h-8 flex items-center justify-center">JS</span>
             </div>
           </div>
           {!collapsed && (
             <div className="ml-3">
-              <p className="text-sm font-medium text-sidebar-foreground">John Smith</p>
-              <p className="text-xs text-sidebar-foreground/70">Admin</p>
+              <p className="text-sm font-medium text-sidebar-foreground text-white">John Smith</p>
+              <p className="text-xs text-sidebar-foreground/70 text-white">Admin</p>
             </div>
           )}
         </div>
