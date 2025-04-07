@@ -4,11 +4,7 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-interface MainLayoutProps {
-  children: React.ReactNode;
-}
-
-const MainLayout = ({ children }: MainLayoutProps) => {
+const MainLayout = ({ children }) => {
   const isMobile = useIsMobile();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 

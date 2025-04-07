@@ -10,17 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-interface SidebarDropdownProps {
-  isActive: boolean;
-  isOpen: boolean;
-  isCollapsed: boolean;
-  toggleDropdown: () => void;
-  label: string;
-  icon: React.ElementType;
-  children: { label: string; href: string }[];
-}
-
-const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
+const SidebarDropdown = ({
   isActive,
   isOpen,
   isCollapsed,

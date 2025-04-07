@@ -7,13 +7,7 @@ import NavbarSearch from "./NavbarSearch";
 import NavbarNotifications from "./NavbarNotifications";
 import NavbarUserMenu from "./NavbarUserMenu";
 
-interface NavbarProps {
-  onToggleMobileSidebar: () => void;
-  isMobileSidebarOpen: boolean;
-  className?: string;
-}
-
-const Navbar = ({ onToggleMobileSidebar, isMobileSidebarOpen, className }: NavbarProps) => {
+const Navbar = ({ onToggleMobileSidebar, isMobileSidebarOpen, className }) => {
   const isMobile = useIsMobile();
   const [searchOpen, setSearchOpen] = useState(false);
 

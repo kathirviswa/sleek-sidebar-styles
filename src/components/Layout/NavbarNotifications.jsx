@@ -2,7 +2,7 @@
 import React from "react";
 import { Bell } from "lucide-react";
 
-const NavbarNotifications: React.FC = () => {
+const NavbarNotifications = () => {
   return (
     <button className="relative p-2 text-gray-500 rounded-md hover:bg-gray-100 focus:outline-none">
       <Bell size={20} />

@@ -14,14 +14,7 @@ import SidebarHeader from "./SidebarHeader";
 import SidebarFooter from "./SidebarFooter";
 import SidebarDropdown from "./SidebarDropdown";
 
-type NavItem = {
-  icon: React.ElementType;
-  label: string;
-  href: string;
-  children: { label: string; href: string }[];
-};
-
-const navItems: NavItem[] = [
+const navItems = [
   { 
     icon: Home, 
     label: "Dashboard", 
@@ -74,13 +67,9 @@ const navItems: NavItem[] = [
   },
 ];
 
-interface SidebarProps {
-  className?: string;
-}
-
-const Sidebar = ({ className }: SidebarProps) => {
+const Sidebar = ({ className }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({});
+  const [openDropdowns, setOpenDropdowns] = useState({});
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("");
 
@@ -99,7 +88,7 @@ const Sidebar = ({ className }: SidebarProps) => {
     }
   }, [location]);
 
-  const toggleDropdown = (label: string) => {
+  const toggleDropdown = (label) => {
     setOpenDropdowns(prev => ({
       ...prev,
       [label]: !prev[label]

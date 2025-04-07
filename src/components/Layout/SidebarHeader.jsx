@@ -3,12 +3,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { ChevronRight, Menu } from "lucide-react";
 
-interface SidebarHeaderProps {
-  collapsed: boolean;
-  toggleCollapsed: () => void;
-}
-
-const SidebarHeader: React.FC<SidebarHeaderProps> = ({ collapsed, toggleCollapsed }) => {
+const SidebarHeader = ({ collapsed, toggleCollapsed }) => {
   return (
     <div className="flex items-center justify-between h-16 px-4 border-b border-sidebar-border">
       <div className={cn("flex items-center", collapsed ? "justify-center w-full" : "")}>

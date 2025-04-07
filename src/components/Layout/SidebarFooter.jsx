@@ -2,11 +2,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-interface SidebarFooterProps {
-  collapsed: boolean;
-}
-
-const SidebarFooter: React.FC<SidebarFooterProps> = ({ collapsed }) => {
+const SidebarFooter = ({ collapsed }) => {
   return (
     <div className="p-4 border-t border-sidebar-border">
       <div className={cn(

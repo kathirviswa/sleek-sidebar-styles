@@ -3,12 +3,7 @@ import React from "react";
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface NavbarSearchProps {
-  isMobile: boolean;
-  searchOpen: boolean;
-}
-
-const NavbarSearch: React.FC<NavbarSearchProps> = ({ isMobile, searchOpen }) => {
+const NavbarSearch = ({ isMobile, searchOpen }) => {
   return (
     <div className={cn(
       "flex-1 relative",
