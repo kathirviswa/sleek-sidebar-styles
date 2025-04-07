@@ -116,18 +116,18 @@ const Sidebar = ({ className }: SidebarProps) => {
   return (
     <aside
       className={cn(
-        "flex flex-col h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out",
+        "flex flex-col h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out",
         collapsed ? "w-20" : "w-64",
         className
       )}
     >
-      <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
+      <div className="flex items-center justify-between h-16 px-4 border-b border-sidebar-border">
         <div className={cn("flex items-center", collapsed ? "justify-center w-full" : "")}>
           {!collapsed && (
-            <span className="text-xl font-bold text-gray-800">Acme Inc</span>
+            <span className="text-xl font-bold text-sidebar-foreground">Acme Inc</span>
           )}
           {collapsed && (
-            <span className="flex h-10 w-10 items-center justify-center rounded-md bg-indigo-100 text-indigo-600 font-bold text-xl">
+            <span className="flex h-10 w-10 items-center justify-center rounded-md bg-sidebar-primary/20 text-sidebar-primary font-bold text-xl">
               A
             </span>
           )}
@@ -135,7 +135,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         <button
           onClick={() => setCollapsed(!collapsed)}
           className={cn(
-            "p-2 rounded-md text-gray-500 hover:bg-gray-100 focus:outline-none",
+            "p-2 rounded-md text-sidebar-foreground hover:bg-sidebar-accent focus:outline-none",
             collapsed ? "mx-auto" : ""
           )}
         >
@@ -156,11 +156,11 @@ const Sidebar = ({ className }: SidebarProps) => {
                   <button
                     onClick={() => toggleDropdown(item.label)}
                     className={cn(
-                      "w-full flex items-center px-4 py-3 text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-600 transition-colors",
-                      isActive && "bg-indigo-50 text-indigo-600 font-medium"
+                      "w-full flex items-center px-4 py-3 text-sidebar-foreground rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors",
+                      isActive && "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                     )}
                   >
-                    <Icon size={20} className={cn(isActive ? "text-indigo-600" : "text-gray-500")} />
+                    <Icon size={20} className={cn(isActive ? "text-sidebar-primary" : "text-sidebar-foreground/70")} />
                     {!collapsed && (
                       <>
                         <span className="ml-3 text-sm flex-1">{item.label}</span>
@@ -182,8 +182,8 @@ const Sidebar = ({ className }: SidebarProps) => {
                           <Link
                             to={child.href}
                             className={cn(
-                              "block py-2 px-3 text-sm rounded-md hover:bg-indigo-50 hover:text-indigo-600 transition-colors",
-                              location.pathname === child.href && "bg-indigo-50 text-indigo-600 font-medium"
+                              "block py-2 px-3 text-sm rounded-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors",
+                              location.pathname === child.href && "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                             )}
                           >
                             {child.label}
@@ -202,7 +202,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                         />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="bg-white shadow-md rounded-md py-1 min-w-[160px] border border-gray-200">
-                        <DropdownMenuItem className="px-3 py-2 text-sm font-medium text-gray-800 hover:bg-indigo-50 hover:text-indigo-600">
+                        <DropdownMenuItem className="px-3 py-2 text-sm font-medium text-gray-800 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                           {item.label}
                         </DropdownMenuItem>
                         <div className="h-px bg-gray-200 my-1" />
@@ -210,7 +210,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                           <DropdownMenuItem key={child.label} asChild>
                             <Link
                               to={child.href}
-                              className="px-3 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 w-full"
+                              className="px-3 py-2 text-sm text-gray-700 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full"
                             >
                               {child.label}
                             </Link>
@@ -226,20 +226,20 @@ const Sidebar = ({ className }: SidebarProps) => {
         </ul>
       </nav>
 
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-sidebar-border">
         <div className={cn(
           "flex items-center",
           collapsed ? "justify-center" : "px-2"
         )}>
           <div className="flex-shrink-0">
-            <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-              <span className="text-indigo-600 font-medium">JS</span>
+            <div className="h-10 w-10 rounded-full bg-sidebar-primary/20 flex items-center justify-center">
+              <span className="text-sidebar-primary font-medium">JS</span>
             </div>
           </div>
           {!collapsed && (
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-800">John Smith</p>
-              <p className="text-xs text-gray-500">Admin</p>
+              <p className="text-sm font-medium text-sidebar-foreground">John Smith</p>
+              <p className="text-xs text-sidebar-foreground/70">Admin</p>
             </div>
           )}
         </div>
